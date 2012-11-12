@@ -28,7 +28,7 @@ public class OrderBeanProcessor {
 		exchange.setProperty("robusta-order", order);
 		
 		//Set some additional headers which ease the use of HTTP.
-		exchange.getIn().setHeader("robusta-productId", order.getId());
+		exchange.getIn().setHeader("robusta-productId", order.getProductId());
 		
 		//Set body to null for rest call.
 		exchange.getIn().setBody(null);
