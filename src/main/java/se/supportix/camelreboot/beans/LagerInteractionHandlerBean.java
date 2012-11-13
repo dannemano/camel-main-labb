@@ -27,8 +27,6 @@ public class LagerInteractionHandlerBean {
 		//Get the current order. Note the difference in packages.
 		se.supportix.camelreboot.xml.Order order = (se.supportix.camelreboot.xml.Order) exchange.getProperty("robusta-order");
 		
-		
-		
 		if (order.getQty() > lagerProduct.getItemsInStock()) {
 			exchange.getIn().setHeader("robusta-lager-status", "NOK");
 		} else {
@@ -37,7 +35,7 @@ public class LagerInteractionHandlerBean {
 		
 		logger.info("Items in stock: {}, reorderpoint: {}", lagerProduct.getItemsInStock(),lagerProduct.getReOrderPoint());
 		
-		if (lagerProduct.getItemsInStock() < lagerProduct.getReOrderPoint()) {
+		if (lagerProduct.getItemsInStock() + order.getQty() < lagerProduct.getReOrderPoint()) {
 			logger.info("Lager is below reorder point. Order more! A file should be created on the FTP server.");
 			CamelContext context = exchange.getContext();
 			ProducerTemplate producerTemplate = context.createProducerTemplate();
